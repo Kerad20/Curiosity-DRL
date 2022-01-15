@@ -16,7 +16,7 @@ def main():
     env_type = default_config['EnvType']
 
     if env_type == 'mario':
-        env = BinarySpaceToDiscreteSpaceEnv(gym_super_mario_bros.make(env_id), COMPLEX_MOVEMENT)
+        env = JoypadSpace(gym_super_mario_bros.make(env_id), COMPLEX_MOVEMENT)
     elif env_type == 'atari':
         env = gym.make(env_id)
     else:
@@ -55,7 +55,7 @@ def main():
     sticky_action = False
     life_done = default_config.getboolean('LifeDone')
 
-    agent = RNDAgent
+    agent = ICMAgent
 
     if default_config['EnvType'] == 'atari':
         env_type = AtariEnvironment

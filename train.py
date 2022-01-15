@@ -17,14 +17,13 @@ def main():
     env_type = default_config['EnvType']
 
     if env_type == 'mario':
-        env = BinarySpaceToDiscreteSpaceEnv(gym_super_mario_bros.make(env_id), COMPLEX_MOVEMENT)
+        env = JoypadSpace(gym_super_mario_bros.make(env_id), COMPLEX_MOVEMENT)
     elif env_type == 'atari':
         env = gym.make(env_id)
     else:
         raise NotImplementedError
     input_size = env.observation_space.shape  # 4
     output_size = env.action_space.n  # 2
-
     if 'Breakout' in env_id:
         output_size -= 1
 
@@ -125,7 +124,6 @@ def main():
     while steps < pre_obs_norm_step:
         steps += num_worker
         actions = np.random.randint(0, output_size, size=(num_worker,))
-
         for parent_conn, action in zip(parent_conns, actions):
             parent_conn.send(action)
 
