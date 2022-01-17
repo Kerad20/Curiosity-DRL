@@ -10,7 +10,7 @@ from copy import copy
 import gym_super_mario_bros
 from nes_py.wrappers import JoypadSpace
 from gym_super_mario_bros.actions import SIMPLE_MOVEMENT, COMPLEX_MOVEMENT
-
+from gym.wrappers import Monitor
 from torch.multiprocessing import Pipe, Process
 
 from model import *
@@ -151,6 +151,7 @@ class AtariEnvironment(Environment):
         super(AtariEnvironment, self).__init__()
         self.daemon = True
         self.env = MaxAndSkipEnv(NoopResetEnv(gym.make(env_id)), is_render)
+        self.env = Monitor(self.env, './video', force='True')
         if 'Montezuma' in env_id:
             self.env = MontezumaInfoWrapper(self.env, room_address=3 if 'Montezuma' in env_id else 1)
         self.env_id = env_id
