@@ -8,15 +8,30 @@
 
  
 ## 1. Setup
-####  Requirements
-
 ------------
 
-- python3.6
-- gym
-- [OpenCV Python](https://pypi.python.org/pypi/opencv-python)
-- [PyTorch](http://pytorch.org/)
-- [tensorboardX](https://github.com/lanpa/tensorboardX)
+### 1.1 Install neccessary tools
+
+- python3.6 (or 3.7)
+- [Pytorch](https://pytorch.org/get-started/locally/) accordingly to your CUDA version
+
+###  1.2 Install Python's requirements
+
+`pip install -r requirements.txt`
+
+### 1.3 Add ROMS to atari_py
+In `Curiosity-DRL` repo root folder:
+
+```
+wget www.atarimania.com/roms/Roms.rar
+unrar x Roms.rar
+mkdir rars
+mv HC\ ROMS.zip   rars
+mv ROMS.zip  rars
+ale-import-roms rars
+```
+
+------------
 
 
 ## 2. How to Train

@@ -1,0 +1,10 @@
+ale-py
+six
+gym
+gym-super-mario-bros
+numpy
+opencv-python
+Pillow
+tensorboardX
+unrar
+zipp
