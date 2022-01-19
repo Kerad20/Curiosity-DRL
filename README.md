@@ -28,7 +28,7 @@ unrar x Roms.rar
 mkdir rars
 mv HC\ ROMS.zip   rars
 mv ROMS.zip  rars
-python -m atari_py.import_roms rars
+ale-import-roms rars
 ```
 
 ------------
