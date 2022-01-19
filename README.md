@@ -28,6 +28,7 @@ unrar x Roms.rar
 mkdir rars
 mv HC\ ROMS.zip   rars
 mv ROMS.zip  rars
+unzip rars/ROMS.zip -d rars/ROMS
 ale-import-roms rars
 ```
 
