@@ -151,7 +151,8 @@ class AtariEnvironment(Environment):
         super(AtariEnvironment, self).__init__()
         self.daemon = True
         self.env = MaxAndSkipEnv(NoopResetEnv(gym.make(env_id)), is_render)
-        self.env = Monitor(self.env, './video', force='True')
+        if env_idx == 0:
+            self.env = Monitor(self.env, './video', force='True')
         if 'Montezuma' in env_id:
             self.env = MontezumaInfoWrapper(self.env, room_address=3 if 'Montezuma' in env_id else 1)
         self.env_id = env_id
