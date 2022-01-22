@@ -3,6 +3,7 @@ from envs import *
 from utils import *
 from config import *
 from torch.multiprocessing import Pipe
+from functools import partial
 
 from tensorboardX import SummaryWriter
 
@@ -65,7 +66,10 @@ def main():
     agent = ICMAgent
 
     if default_config['EnvType'] == 'atari':
-        env_type = AtariEnvironment
+        if is_load_model:
+            env_type = partial(AtariEnvironment, resume=True)
+        else:
+            env_type = AtariEnvironment
     elif default_config['EnvType'] == 'mario':
         env_type = MarioEnvironment
     else:

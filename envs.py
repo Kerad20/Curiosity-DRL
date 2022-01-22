@@ -6,6 +6,7 @@ import numpy as np
 from abc import abstractmethod
 from collections import deque
 from copy import copy
+from datetime import datetime
 
 import gym_super_mario_bros
 from nes_py.wrappers import JoypadSpace
@@ -147,12 +148,15 @@ class AtariEnvironment(Environment):
             history_size=4,
             h=84,
             w=84,
-            life_done=True):
+            life_done=True,
+            resume=False):
         super(AtariEnvironment, self).__init__()
         self.daemon = True
-        self.env = MaxAndSkipEnv(NoopResetEnv(gym.make(env_id)), is_render)
+        self.env = NoopResetEnv(gym.make(env_id))
         if env_idx == 0:
-            self.env = Monitor(self.env, './video', force='True')
+            starttime = datetime.now().strftime('%y%m%d-%H%M%S')
+            self.env = Monitor(self.env, './vid-{}-{}'.format(env_id, starttime), resume=resume)
+        self.env = MaxAndSkipEnv(self.env, is_render)
         if 'Montezuma' in env_id:
             self.env = MontezumaInfoWrapper(self.env, room_address=3 if 'Montezuma' in env_id else 1)
         self.env_id = env_id
