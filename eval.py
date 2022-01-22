@@ -85,12 +85,8 @@ def main():
     print('Loading Pre-trained model....')
     if use_cuda:
         agent.model.load_state_dict(torch.load(model_path))
-        agent.rnd.predictor.load_state_dict(torch.load(predictor_path))
-        agent.rnd.target.load_state_dict(torch.load(target_path))
     else:
         agent.model.load_state_dict(torch.load(model_path, map_location='cpu'))
-        agent.rnd.predictor.load_state_dict(torch.load(predictor_path, map_location='cpu'))
-        agent.rnd.target.load_state_dict(torch.load(target_path, map_location='cpu'))
     print('End load...')
 
     works = []
