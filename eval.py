@@ -29,7 +29,7 @@ def main():
 
     env.close()
 
-    is_render = True
+    is_render = False
     model_path = 'models/{}.model'.format(env_id)
     predictor_path = 'models/{}.pred'.format(env_id)
     target_path = 'models/{}.target'.format(env_id)
@@ -108,7 +108,7 @@ def main():
     intrinsic_reward_list = []
     while not rd:
         steps += 1
-        actions, value_ext, value_int, policy = agent.get_action(np.float32(states) / 255.)
+        actions, value_ext, policy = agent.get_action(np.float32(states) / 255.)
 
         for parent_conn, action in zip(parent_conns, actions):
             parent_conn.send(action)
@@ -121,17 +121,17 @@ def main():
             next_obs = s[3, :, :].reshape([1, 1, 84, 84])
 
         # total reward = int reward + ext Reward
-        intrinsic_reward = agent.compute_intrinsic_reward(next_obs)
-        intrinsic_reward_list.append(intrinsic_reward)
-        states = next_states[:, :, :, :]
+        # intrinsic_reward = agent.compute_intrinsic_reward(next_obs)
+        # intrinsic_reward_list.append(intrinsic_reward)
+        # states = next_states[:, :, :, :]
 
-        if rd:
-            intrinsic_reward_list = (intrinsic_reward_list - np.mean(intrinsic_reward_list)) / np.std(
-                intrinsic_reward_list)
-            with open('int_reward', 'wb') as f:
-                pickle.dump(intrinsic_reward_list, f)
-            steps = 0
-            rall = 0
+        # if rd:
+        #     intrinsic_reward_list = (intrinsic_reward_list - np.mean(intrinsic_reward_list)) / np.std(
+        #         intrinsic_reward_list)
+        #     with open('int_reward', 'wb') as f:
+        #         pickle.dump(intrinsic_reward_list, f)
+        #     steps = 0
+        #     rall = 0
 
 
 if __name__ == '__main__':
